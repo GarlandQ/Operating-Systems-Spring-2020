@@ -1,0 +1,11 @@
+Garland Qiu
+
+Based on the code for parentp.c (what I named for Part 2 of Task 2):
+
+We can essentially think of the forking function as a tree, as it should be the easiest to explain or visualize. We start at the top of the tree, which is the file itself in this case, and we call fq=fork(). This creates a node in our tree with our values of a,b,fq, and fr copied. When we forked successfully, in this case fq == 0, then we compute the following: a=a+b and get our values to be a=35 and b=25. 
+
+Since the child or node in this tree example is not yet finished with its process, we keep going until it is finished and the child fq returns a 1 to complete the else statement at the end. For now, we continue by calling fr=fork(), which creates another child fr within the child fq. This fr child has the values we used from fq, which were a=35 and b=25. We repeat the process before and check the conditions. If fr!=0, we compute b=b+20 and get our values of a=35 and b=45. If fr is anything else, then it computes a=(a*b)+30, which gives us our values of a=905 and b=25. 
+
+Now we officially finish processing the tasks inside child fq when it is 0, but we still have to execute the condition when fq is not 0. When forking, the function returns 1 to return to the parent and since we have an else statement for it, we compute the last operation, which is b=a+b-5. Keep in mind that this child fq only copied the starting values a=10 and b=25, therefore, when computing b=a+b-5, we get a=10 and b=30.
+
+When we run the c file, we may notice that the process id does not relate to how we did our process, but the results are generally the same. This has something to do with the OS assigning the tasks. You can also think of the OS computing this as in they compute the postive return values first before 0 and negative return values when forking.
